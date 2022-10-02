@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Coffee Guide</title>
+</head>
+<body>
+    <!-- sprite -->
+
+   <svg style="display: none;">
+    <symbol id="coffee" viewBox="0 0 500 500">
+        <g>
+            <path class="st1" d="M360.1,282.9c-5.2-6.5-13.3-10-24.3-10.5c-1.7-0.1-3.3,0-4.9,0c0.1-2.2,0.1-4.5,0.1-6.8c0,0,0,0,0,0
+                c0-0.1,0-0.2,0-0.4h-6.7H153.6h-6.7c0,0.1,0,0.2,0,0.4c0,0,0,0,0,0c0.2,43,11.7,71.6,43.6,109.2c2.5,3-2.1,5.6-1.8,8.5h100.6
+                c0.3-2.8-4.3-5.5-1.8-8.5c2.1-2.5,4.1-4.9,6-7.3c10.4-5.1,23.3-11.3,32.4-15.3c21.7-9.6,35.6-25.3,39.1-44.1
+                C366.9,298,365.2,289.3,360.1,282.9z M351.9,305.8c-3.4,18.4-18.9,28.8-31.3,34.3c-3.3,1.5-7.1,3.2-11,5
+                c11.8-19.2,18.1-37.6,20.5-59.2c1.6-0.2,3.3-0.2,5.3-0.1c6.9,0.3,11.7,2.1,14.4,5.5C352.9,295.4,352.7,301.4,351.9,305.8z"/>
+            <path class="st1" d="M239,388.7H134.3c2.8,3.5,4,4.1,14,7c10.9,3.2,21.1,3.8,90.7,4.3c69.7-0.4,79.8-1.1,90.7-4.3
+                c9.9-2.9,11.2-3.5,14-7H239z"/>
+            <g>
+                <path class="st1" d="M272.1,100c-5.2,9.3-9.4,18.8-11.7,31.5c-2.8,16.1-0.6,28.3,2,43.4c5.5,32.5-5,60.2-22.6,68.2
+                    c4.8-10.4,10.2-21.7,11.1-35.6c1-16.1-4.7-28-5.7-43.1C243.8,134,255.2,104.7,272.1,100z"/>
+                <path class="st1" d="M301,135.3c-3.4,6.1-6.2,12.3-7.6,20.6c-1.8,10.5-0.4,18.5,1.3,28.4c3.6,21.2-3.2,39.3-14.8,44.6
+                    c3.1-6.8,6.6-14.2,7.2-23.3c0.7-10.5-3.1-18.3-3.7-28.2C282.5,157.5,290,138.4,301,135.3z"/>
+                <path class="st1" d="M232.8,135.3c-3.4,6.1-6.2,12.3-7.6,20.6c-1.8,10.5-0.4,18.5,1.3,28.4c3.6,21.2-3.2,39.3-14.8,44.6
+                    c3.1-6.8,6.6-14.2,7.2-23.3c0.7-10.5-3.1-18.3-3.7-28.2C214.3,157.5,221.7,138.4,232.8,135.3z"/>
+            </g>
+        </g>
+    </symbol>
+  
+    <symbol id="facebook" viewBox="0 0 96.124 96.123">
+    <g>
+    <path d="M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803
+    c0,1.083,0.878,1.96,1.96,1.96h12.533v39.876c0,1.083,0.877,1.96,1.96,1.96h16.352c1.083,0,1.96-0.878,1.96-1.96V54.287h14.654
+    c1.083,0,1.96-0.877,1.96-1.96l0.006-15.803c0-0.52-0.207-1.018-0.574-1.386c-0.367-0.368-0.867-0.575-1.387-0.575H56.842v-9.246
+    c0-4.444,1.059-6.7,6.848-6.7l8.397-0.003c1.082,0,1.959-0.878,1.959-1.96V1.98C74.046,0.899,73.17,0.022,72.089,0.02z"/>
+    </g>
+    </symbol>
+    <symbol id="instagram" viewBox="0 0 438.536 438.536">
+    <g>
+    <path d="M421.981,16.562C410.941,5.519,397.711,0,382.298,0H56.248C40.83,0,27.604,5.521,16.561,16.562
+    C5.52,27.6,0.001,40.828,0.001,56.243V382.29c0,15.413,5.518,28.644,16.56,39.683c11.043,11.04,24.272,16.563,39.687,16.563
+    h326.046c15.41,0,28.644-5.523,39.684-16.563c11.043-11.039,16.557-24.27,16.557-39.683V56.243
+    C438.534,40.825,433.021,27.604,421.981,16.562z M157.462,158.025c17.224-16.652,37.924-24.982,62.097-24.982
+    c24.36,0,45.153,8.33,62.381,24.982c17.228,16.655,25.837,36.785,25.837,60.386c0,23.598-8.609,43.729-25.837,60.379
+    c-17.228,16.659-38.014,24.988-62.381,24.988c-24.172,0-44.87-8.336-62.097-24.988c-17.228-16.652-25.841-36.781-25.841-60.379
+    C131.621,194.81,140.234,174.681,157.462,158.025z M388.865,370.589c0,4.945-1.718,9.083-5.141,12.416
+    c-3.433,3.33-7.519,4.996-12.282,4.996h-305.2c-4.948,0-9.091-1.666-12.419-4.996c-3.333-3.326-4.998-7.471-4.998-12.416V185.575
+    H89.08c-3.805,11.993-5.708,24.462-5.708,37.402c0,36.553,13.322,67.715,39.969,93.511c26.65,25.786,58.721,38.685,96.217,38.685
+    c24.744,0,47.583-5.903,68.527-17.703c20.937-11.807,37.486-27.839,49.676-48.112c12.183-20.272,18.274-42.4,18.274-66.38
+    c0-12.94-1.91-25.406-5.715-37.402h38.547v185.014H388.865z M388.865,115.626c0,5.52-1.903,10.184-5.716,13.99
+    c-3.805,3.809-8.466,5.711-13.989,5.711h-49.676c-5.517,0-10.185-1.903-13.99-5.711c-3.806-3.806-5.708-8.47-5.708-13.99V68.522
+    c0-5.33,1.902-9.945,5.708-13.848c3.806-3.901,8.474-5.854,13.99-5.854h49.676c5.523,0,10.185,1.952,13.989,5.854
+    c3.812,3.903,5.716,8.518,5.716,13.848V115.626z"/>
+    </g>
+    </symbol>
+   
+    <symbol id="linkedin" viewBox="0 0 430.117 430.117">
+    <g>
+    <path d="M430.117,261.543V420.56h-92.188V272.193c0-37.271-13.334-62.707-46.703-62.707
+    c-25.473,0-40.632,17.142-47.301,33.724c-2.432,5.928-3.058,14.179-3.058,22.477V420.56h-92.219c0,0,1.242-251.285,0-277.32h92.21
+    v39.309c-0.187,0.294-0.43,0.611-0.606,0.896h0.606v-0.896c12.251-18.869,34.13-45.824,83.102-45.824
+    C384.633,136.724,430.117,176.361,430.117,261.543z M52.183,9.558C20.635,9.558,0,30.251,0,57.463
+    c0,26.619,20.038,47.94,50.959,47.94h0.616c32.159,0,52.159-21.317,52.159-47.94C103.128,30.251,83.734,9.558,52.183,9.558z
+     M5.477,420.56h92.184v-277.32H5.477V420.56z"/>
+    </g>
+    </symbol>
+    <symbol id="pinterest" viewBox="0 0 310.05 310.05">
+    <g>
+    <path d="M245.265,31.772C223.923,11.284,194.388,0,162.101,0c-49.32,0-79.654,20.217-96.416,37.176
+    c-20.658,20.9-32.504,48.651-32.504,76.139c0,34.513,14.436,61.003,38.611,70.858c1.623,0.665,3.256,1,4.857,1
+    c5.1,0,9.141-3.337,10.541-8.69c0.816-3.071,2.707-10.647,3.529-13.936c1.76-6.495,0.338-9.619-3.5-14.142
+    c-6.992-8.273-10.248-18.056-10.248-30.788c0-37.818,28.16-78.011,80.352-78.011c41.412,0,67.137,23.537,67.137,61.425
+    c0,23.909-5.15,46.051-14.504,62.35c-6.5,11.325-17.93,24.825-35.477,24.825c-7.588,0-14.404-3.117-18.705-8.551
+    c-4.063-5.137-5.402-11.773-3.768-18.689c1.846-7.814,4.363-15.965,6.799-23.845c4.443-14.392,8.643-27.985,8.643-38.83
+    c0-18.55-11.404-31.014-28.375-31.014c-21.568,0-38.465,21.906-38.465,49.871c0,13.715,3.645,23.973,5.295,27.912
+    c-2.717,11.512-18.865,79.953-21.928,92.859c-1.771,7.534-12.44,67.039,5.219,71.784c19.841,5.331,37.576-52.623,39.381-59.172
+    c1.463-5.326,6.582-25.465,9.719-37.845c9.578,9.226,25,15.463,40.006,15.463c28.289,0,53.73-12.73,71.637-35.843
+    c17.367-22.418,26.932-53.664,26.932-87.978C276.869,77.502,265.349,51.056,245.265,31.772z"/>
+    </g>
+    </symbol>
+    <symbol id="twitter" viewBox="0 0 512 512">
+    <g>
+    <path d="M512,97.248c-19.04,8.352-39.328,13.888-60.48,16.576c21.76-12.992,38.368-33.408,46.176-58.016
+        c-20.288,12.096-42.688,20.64-66.56,25.408C411.872,60.704,384.416,48,354.464,48c-58.112,0-104.896,47.168-104.896,104.992
+        c0,8.32,0.704,16.32,2.432,23.936c-87.264-4.256-164.48-46.08-216.352-109.792c-9.056,15.712-14.368,33.696-14.368,53.056
+        c0,36.352,18.72,68.576,46.624,87.232c-16.864-0.32-33.408-5.216-47.424-12.928c0,0.32,0,0.736,0,1.152
+        c0,51.008,36.384,93.376,84.096,103.136c-8.544,2.336-17.856,3.456-27.52,3.456c-6.72,0-13.504-0.384-19.872-1.792
+        c13.6,41.568,52.192,72.128,98.08,73.12c-35.712,27.936-81.056,44.768-130.144,44.768c-8.608,0-16.864-0.384-25.12-1.44
+        C46.496,446.88,101.6,464,161.024,464c193.152,0,298.752-160,298.752-298.688c0-4.64-0.16-9.12-0.384-13.568
+        C480.224,136.96,497.728,118.496,512,97.248z"/>
+    </g>
+    </symbol>
+</svg>
+
+
+<!-- header -->
+<nav class="nav">
+    <ul class="nav-list">
+
+        <li class="nav-item">
+            <a class="header-icon" href="index.html" title="Home">
+                <svg class="logo-icon">
+                    <use xlink:href="#coffee"></use>
+                </svg>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="guide.html" class="nav-link current">Guide</a>
+        </li>
+        <li class="nav-item">
+            <a href="brewfacts.html" class="nav-link">Brewfacts</a>
+        </li>
+        <li class="nav-item">
+            <a href="locations.html" class="nav-link">Locations</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+<!-- tabs -->
+<main class="page">
+    <div class="tab">
+        <button class="tablinks first-tab" onclick="openTab(event, 'coffeeBeans')">Types of Coffee Beans</button>
+        <button class="tablinks" onclick="openTab(event, 'blackCoffees')">Black Coffees</button>
+        <button class="tablinks" onclick="openTab(event, 'nonMilkBasedCoffees')">Non-milk Based Coffees</button>
+        <button class="tablinks" onclick="openTab(event, 'milkBasedCoffees')">Milk-Based Coffees</button>
+        <button class="tablinks" onclick="openTab(event, 'coldCoffees')">Cold Coffees</button>
+        <button class="tablinks" onclick="openTab(event, 'exoticCoffees')">Exotic Coffees</button>
+        <button class="tablinks" onclick="openTab(event, 'coffeeMakers')">Types of Coffee Makers</button>
+    </div>
+    <div class="container">
+
+
+    <div id="coffeeBeans" class="tabcontent active">
+
+        <div class="paragraph-left-wrapper">
+
+        <img src="img/beans/Coffea-Liberica-5.jpg" alt="" class="beans-img">
+        <div class="paragraph-text-outer-wrapper">
+
+        <h3 class="paragraph-title">Arabica</h3>
+        <p class="paragraph-text">
+            <b>Origin/History/Classification</b><br>
+            Did you know that the Oromo tribe in Ethiopia enjoyed crushed coffee beans and fat as a perky snack? This was back in the 7th century amazingly enough. 
+            This was long before crude coffee beans were imported to lower Arabia at that time. It wasn’t until they hit the Arabian streets, that coffee was born. 
+            The Coffea Arabica bean was finely ground and took lots of simmering to bring-out a proper Arab coffee brew. 
+            This aided the old scholars to work longer and stay-up-late, further helping other scholars to spread the news. And it wasn’t just about the caffeine!
+        </p>
+
+        <p class="paragraph-text">
+            <b>Characteristics/Traits/Flavors/Climate</b><br>
+            Arabica coffee offers a very special flavor profile. These fine beans have a sweet chocolate-like or caramel flavor that can be characterized as being nutty. 
+            There is also just a hint of fruity flavors reminding you of berries at times. It’s filled with a subtle acidity that has no bite and very little bitterness to it. 
+            This mountainside tree likes high altitudes above 600 meters above sea level that likes high humidity and shade. It’s picked when the cherry fruit is nearly a deep purple, as this is the perfect harvest time. In all, there are 22 different varieties of Arabica coffee beans.
+        </p>
+        </div>
+        </div>
+        <div class="paragraph-right-wrapper">
+            <img src="img/beans/shutterstock_1707181633-1-1440x720-q70.jpg" alt="" class="beans-img">
+            <div class="paragraph-text-outer-wrapper">
+    
+        <h3 class="paragraph-title">Robusta</h3>
+        <p class="paragraph-text">
+            <b>Origin/History/Classification</b><br>
+            You might never have thought that Robusta was discovered growing in the wilds of the Congo in the early 1800s. 
+            An indigenous coffee tree that grew in the Ugandan tropical forests around Lake Victoria was soon labeled Coffea Canephora. 
+            It didn’t play a big part in saving the day until the Coffee Leaf Rust of 1869 wiped-out Arabica coffee. 
+            Because Robusta is immune to viruses it can be grown at lower levels below 600 meters and needs less water. It’s a lower shrub with larger canopy coverage and produces berries faster than Arabica per year. Because it still needs a sub-tropical climate, countries, where rainfall and humidity are constant, are important. 
+            Today, the reputation of Robusta is somewhat smeared but not forgotten for their role in the past. Even though Robusta makes up 40% of the market share behind Arabica, this bean does offer remarkable characteristics.
+        </p>
+        <p class="paragraph-text">
+            <b>Characteristics/Traits/Flavors/Climate</b><br>
+            Coffee lovers love the caffeine kick and nearly 100% of the instant coffee brands contain Robusta beans. 
+            It’s no secret that Robusta is a powerful little bean that has 2x the caffeine than Arabica. But because these beans lack natural sugars, 
+            they fair much better for insects and diseases too. Among flavors, the Robusta is a natural strong coffee flavor. 
+            Just like the name itself, Robusta is a robust flavor that features more bite with a proper kick. It’s stronger, 
+            bitter and offers earthy flavors like woody or nutty undertones. Robusta is preferred by espresso drinkers because it produces an excellent crema. 
+            This is why Italians combined Robusta for their Italian roast blends. 
+            A cost-effective solution that offers coffee roasters a cheaper coffee bean that delivers more caffeine and sharp taste. 
+            Robusta may pretend to the underdog, yet remain a global contender. Let’s learn some things you didn’t know between Robusta and Arabica.
+        </p>
+        </div>
+    </div>
+
+        <div class="paragraph-left-wrapper">
+            <img src="img/beans/A-heaping-scoop-of-coffee-beans-1-14-5.jpg" alt="" class="beans-img">
+            <div class="paragraph-text-outer-wrapper">
+        <h3 class="paragraph-title">Liberica</h3>
+        <p class="paragraph-text">
+            <b>Origin/History/Classification</b><br>
+            Can you imagine Liberica coffee is another species of coffee plant brought-in to solve the 1869 Coffee Leaf Rust outbreak? 
+            This species is indeed a true underdog of coffee culture that makes-up 2% of global production. Classified as Coffea Liberica, 
+            this version is gaining popularity in the last 10 years from new roasting methods. 
+            It originated in Liberia and was eventually imported to the Philippines, Indonesia, and Malaysia. 
+            It has a strong following among the big three but is not popular in the western countries. 
+            It wasn’t until the 1890’s that Liberica was imported to low altitude climates that could withstand the heat easier. 
+            The trees tend to be like Robusta and are low and wide which are best suited for harvesting. 
+            The fruit itself is often tear-shaped and larger than Robusta or Arabica. It was regarded by critics for being bitter and rubbery tasting, 
+            yet that is now changing.
+        </p>
+        <p class="paragraph-text">
+            <b>Characteristics/Traits/Flavors/etc.</b><br>
+            Over the last 150 years, Liberica has gotten a terrible rap. The method of roasting had not taken into account the sugar concentration of the cherry fruit itself. 
+            In the last 5 years, private roasters have selected new beans and developed a better roasting method. The result is now turning heads of Arabica bean lovers. 
+            Find out why? Before, it was considered that this bean has good caffeine content with a strong bitter taste. 
+            Now the gourmet coffee roasters have created Liberica roasts that have full fruity flavors. Some beans can have a chocolate and lemon flavor, 
+            while others offer jackfruit and chorizo. Some tasting experts have gone so far to say that Liberica is sweeter than Arabica! 
+            While this may have become the forgotten species, newer Borneo crops are getting more attention than the Geisha beans. 
+            This could mean a whole new comeback for Liberica in general.
+        </p>
+        </div>
+        </div>
+        <div class="paragraph-right-wrapper">
+            <img src="img/beans/l-intro-1655826587.jpg" alt="" class="beans-img">
+            <div class="paragraph-text-outer-wrapper">
+            <h3 class="paragraph-title">Excelsa</h3>
+            <p class="paragraph-text">
+                <b>Origin/History/Classification</b><br>
+                Did you know that one time, experts used to think that Liberica and Excelsa were different from each other? 
+                This coffee plant was discovered near Lake Chad in 1903 in sub-tropical West Africa and is classified as Coffea Excelsa. 
+                It is a strain variant of the Liberica that is starting to get noticed. 
+                It happens to be a very hearty tree that is resistant to drought making it perfect for growing throughout Southeast Asia. 
+                It’s not a high yield coffee tree for the same reason and only counts for 7% of the coffee trade. 
+                Pricewise the costs for importing this coffee can be higher than most. 
+                The Excelsa tree tends to be 20-30 feet tall, unlike the Liberica tree. This is one of the reasons why it was classified differently when it was first discovered. 
+                It also likes similar altitudes and Liberica and has a large cherry fruit that is almond-shaped.
+            </p>
+            <p class="paragraph-text">
+                <b>Characteristics/Traits/Flavors</b><br>
+                While it was originally used as a blending substitute years earlier, newer roasting methods are giving this coffee bean worthy notice. The flavor profile is said to be tart and fruity with much of the palate flavors centered on your tongue. It also features a unique combination of both light and dark roast characteristics. 
+                While coffee experts have remarked that the flavor is similar to ripening fruit, the newer roasting methods take advantage of slow roasting. This helps to preserve the sugars and develop the flavors for a more refined taste. This isn’t to say that blended versions of Excelsa and Arabica haven’t already been tried. 
+                The lingering finish is one of the better qualities you can expect from Excelsa coffee. By itself, the flavor can be similar to LIberica and may even have a sharp and strong taste. You might need to check what province your beans come from.
+            </p>
+        </div>
+        </div>
+    </div>
+
+<!-- black coffees -->
+    <div id="blackCoffees" class="tabcontent">
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Espresso-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Espresso</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">The Italian Diva among coffees made by
+                        forcing high-pressure steam
+                        through grounded coffee beans.
+                        Result? Thick coffee texture with a
+                        delicious foam on top.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Doppio-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Doppio</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">Meaning “double” in Italian is a simple
+                        double espresso shot and it is made by
+                        coffee passing through the portafilter
+                        with a double spout.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Ristretto-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Ristretto</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is a type of a so-called “short”
+                        espresso. It is made just like a regular
+                        espresso but using half the amount of
+                        water.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Americano-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Americano</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">Whoever prefers a bit lighter texture
+                        of espresso – voilà! Americano is
+                        a weaker espresso with a more
+                        substantial amount of water, served in
+                        a big coffee cup.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Drip-coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Drip Coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">Drip coffee is a strong one made
+                        during a slow process of dripping
+                        boiling water over ground coffee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Pourover-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Pourover</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">An authentic piece of art! This type
+                        of coffee is made by continuously
+                        refreshing the water surrounding the
+                        grounded coffee. Three phases of this
+                        process add to the unique taste and
+                        quality of the coffee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Long-Black-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Long Black</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">A stronger version of Americano is made
+                        by pouring two shots of espresso over
+                        a small amount of water.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Immersion-brewing-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Immersion Brewing</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">A joy that makes time to make – this
+                        type of beverage is made by dipping
+                        the grounds into boiling water where they
+                        steep for some time. This makes the
+                        final taste richer.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Aeropress-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">AeroPress Coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">A peculiar taste of this type of coffee
+                        is accomplished by using a special
+                        device. By placing a paper filter in
+                        the tube, coffee is steeped for about
+                        one minute and then pressed through
+                        the filter with a plunger.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Instant-coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Instant Coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">Easy & quick – this coffee is made by
+                        simply pouring the desired amount
+                        of hot water over the coffee
+                        powder and stirring until
+                        dissolves.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Bulletproof-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Bulletproof coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">A favorite for hangovers,
+                        this combines coffee or espresso
+                        with 2 tablespoons of whole butter
+                        and one tablespoon coconut oil.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Turkish-coffee-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Turkish Coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">Traditional Turkish Coffee is prepared
+                        in a pot called dzezva (cezve).
+                        The water is heated in the pot
+                        until it boils, then the ground coffee
+                        is put inside. After steering a bit,
+                        it is often quickly reheated just to get
+                        an extra cream on the top.
+                        Remains of the coffee powder will
+                        stay in your cup as the coffee is
+                        not filtered.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Black-eye-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Black eye</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Espresso</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is made by adding two
+                        or three shots of espresso added
+                        to ordinary drip coffee with
+                        optional milk or cream.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Capsule-coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Capsule coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">These are specially-made capsules
+                        that contain coffee or espresso
+                        that's pre-ground and sealed that
+                        is brewed using a capsule espresso machine.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Coffee-bags-300x181.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Coffee bags</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">A new form of coffee or espresso
+                        that's placed into a filter bag designed
+                        to use for pour-over coffee methods
+                        and filters the coffee grounds.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Decaf-coffee-300x181.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Decaf coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">Whole coffee beans are steamed
+                        so they swell and then a solvent
+                        is added which draws out the caffeine.
+                        They're re-dried after that.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Dripped-eye-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Dripped eye</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Espresso</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is made using 3 shots
+                        of espresso to drip coffee,
+                        similar to a black eye coffee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Espressino-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Espressino</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">A combination of espresso, steamed milk,
+                        and cocoa that is served in a
+                        shot glass. A popular version from Italy.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Green-coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Green Coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Green Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is made by grinding unroasted
+                        coffee beans to produce a tea-like
+                        coffee that tastes more herbal
+                        than coffee-like.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Guido-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Guido</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">You can make this using three shots
+                        of espresso served in an espresso cup
+                        with very little sugar added.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Lazy-eye-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Lazy eye</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Decaffeinated coffee</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">To make this you add 2 or 3 shots
+                        of espresso to decaffeinated coffee.
+                        A weaker version of a red-eye coffee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Moka-pot-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Moka pot</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is a brewing pot that uses
+                        pressure to force out coffee or espresso
+                        to make richer tasting coffee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Red-Eye-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Red Eye</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Coffee</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">A standard mug of drip brew
+                        coffee that has a single shot
+                        of espresso added.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/black-coffees/Siphon-vacuum-coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Siphon</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This brewing method will produce
+                        strong tasting coffee that uses pressure
+                        to push water into a brewing vessel,
+                        and a vacuum to filter the finished coffee.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!---Non milk based coffees-->
+    <div id="nonMilkBasedCoffees" class="tabcontent">
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/non-milk/Cafe-Con-Hielo-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Café Con Hielo</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This drink is often a single
+                        or double shot of espresso
+                        that's mixed with sugar and
+                        then poured over ice cubes.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/non-milk/Cafe-Crema-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Café Crema</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is essentially a long espresso
+                        where more water is passed into
+                        the cup and is similar to an
+                        Americano.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/non-milk/Cafe-Zorro-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Café Zorro</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is a 1:1 ratio of double
+                        espresso and water mixed
+                        together and served hot.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/non-milk/Lungo-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Lungo</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is made with a shot of espresso
+                        with double the amount of water. It
+                        can also be considered similar to
+                        Americano but with a more refined
+                        taste.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- milk based coffees -->
+    <div id="milkBasedCoffees" class="tabcontent">
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Flat-White-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Flat White</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Steamed Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is, Ladies and Gentlemen, very
+                        much consumed beverage, consisting
+                        of espresso with a lower amount of
+                        steamed milk that acts as a side taste.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Cappuccino-300x199.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Cappuccino</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milked Foam</li>
+                        <li class="ingredients-item">Steamed Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">Famous coffee with even more iconic
+                        crema contains 1/3 of espresso and
+                        the same measure of foamed milk and
+                        steamed milk. One of the better known
+                        Coffee Drink Recipes is the cappuccino
+                        and consists of espresso (25-
+                        30ml), which is then topped with
+                        frothed hot milk in a 150ml
+                        tall glass or mug.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Latte-300x181.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Latte</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Steamed Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">Latte is coffee where milk takes over
+                        the stage, dominating over the taste of
+                        espresso. We could say it’s a form of
+                        Cappuccino with more milk.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Caffe-Breve-300x194.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Caffe Breve</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milked Foam</li>
+                        <li class="ingredients-item">Half-and-Half Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is, Ladies and Gentlemen, very
+                        much consumed beverage, consisting
+                        of espresso with a lower amount of
+                        steamed milk that acts as a side taste.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Macchiato-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Macchiato</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Steamed Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">To mix any of this together would
+                        be a total disaster. It’s made
+                        so that an equal amount of
+                        milk and espresso mix as your
+                        drink it. You are also treated
+                        to a warm foamed milk cap
+                        that is often sweet.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Antocinno-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Antocinno</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is created with a single
+                        shot of espresso and served
+                        with steamed milk in a 1:1 ratio.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Black-tie-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Black tie</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Tea</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This alternate version includes a
+                        shot of espresso and Thai tea
+                        which is topped off with milk,
+                        cream, and sugar.
+                    </p>
+                </div>
+            </div>
+        
+        
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Cafe-Au-Lait-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Café Au Lait</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is a standard cup of
+                        drip coffee that's served with
+                        steamed milk with a 1:1 ratio.
+                        (Just like the Antoccino)
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Cafe-Bombon-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Café Bombon</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Condensed Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">Add just one shot of espresso
+                        added to a shot of condensed
+                        milk with a 1:1 ratio.
+                    </p>
+                </div>
+            </div>
+
+        
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Cafe-Mocha-300x181.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Café Mocha</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">The same as a Latte but has a
+                        1:3 ratio of one shot of espresso
+                        and steamed milk and chocolate
+                        syrup added.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Cafe-Cubano-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Café Cubano</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Sugar</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">Only add a single shot of
+                        espresso that gets a couple small
+                        spoons of demerara sugar.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Cha-Phe-Sua-Da-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Cha Phe Sua Da</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Condensed Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is a traditional Vietnamese
+                        coffee filtered through a Phin' coffee
+                        maker and mixed with cup
+                        condensed milk served over ice.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Cortado-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Cortado</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is usually a single or double
+                        shot of espresso with one-quarter
+                        cup of warm milk.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Dirty-Chai-Latte-300x181.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Dirty Chai Latte</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Tea</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">To make this you add one shot
+                        of espresso to spiced tea
+                        and steamed milk.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Eiskaffee-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Eiskaffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Ice cream</li>
+                        <li class="ingredients-item">Coffee</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is often sold as a German
+                        iced coffee drink under
+                        the name Eiskaffee.
+                    </p>
+                </div>
+            </div>
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Es-Copi-Susu-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Es Copi Susu</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Condensed Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is often made with brewing coffee
+                        inside condensed milk and allowed
+                        to cool so the grounds fall
+                        to the bottom.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Espresso-con-Panna-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Espresso con Panna</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Whipped Cream</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is a single shot of
+                        espresso served in a demitasse
+                        (espresso cup) topped with whipped cream.
+                    </p>
+                </div>
+            </div>
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Galo-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Galăo</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">A traditional Portuguese coffee with
+                        espresso and steamed milk poured into
+                        a cup using a 1:3 ratio.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Frappe-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Frappe</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This can be served with milk,
+                        creamer, whipped in a blender with
+                        the coffee or espresso with
+                        added syrup served cold.
+                    </p>
+                </div>
+            </div>
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Frappuccino-222x300.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Frappuccino</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">You'll only find this version
+                        found at Starbucks and is a
+                        registered name based on the
+                        Frappe blend.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Mocha-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Mocha</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Cold cream</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">The traditional mocha is made with
+                        a shot of espresso, cold cream,
+                        and then topped with chocolate syrup.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/milk-coffees/Vienna-coffee-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Vienna coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Whipped cream</li>
+                        <li class="ingredients-item">Cocoa powder</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">You can use espresso or regular
+                        drip coffee that is topped with
+                        whipped cream.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<!-- cold coffees -->
+    <div id="coldCoffees" class="tabcontent">
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/cold-coffees/Cold-Brew-coffee-222x300.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Cold Brew Coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This method is made with 2
+                        to 2 times more coffee that
+                        sits in the water at room
+                        temperature for a day and then filtered. Cold brew is different from iced coffee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/cold-coffees/Japanese-iced-coffee-222x300.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Japanese Iced Coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Ice</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This uses a Nel Drip or
+                        Chemex vessel to brew coffee that
+                        directly drips onto ice cubes inside
+                        the lower vessel.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/cold-coffees/New-Orleans-iced-coffee-222x300.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">New Orleans iced coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This has a cold brewing recipe
+                        of 1:10 ratio. One part chicory
+                        and 10 parts coffee or espresso
+                        to 100 parts water for 12 hours.
+                        It's filtered and served over ice
+                        with sugar syrup added.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/cold-coffees/Nitro-222x300.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Nitro</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Nitrogen</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is espresso coffee that is
+                        added to a whipped cream container
+                        with Nitrogen gas canisters to infuse
+                        the coffee resulting in a creamy
+                        and fizzy coffee texture.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/cold-coffees/Sand-brewed-coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Sand-brewed coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is made by placing ground
+                        coffee and water into a Turkish
+                        Cezve and placed into hot sand
+                        that's heated inside a wok. The
+                        result is a coffee that's thicker
+                        and tastier.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- exotic coffees -->
+    <div id="exoticCoffees" class="tabcontent">
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Affogato-300x180.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Affogato</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Ice cream/Gelato</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is a scoop of ice
+                        cream with a single shot of
+                        espresso poured over the top.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Caffe-Gommosa-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Caffé Gommosa</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Marshmallow</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is a single shot of
+                        espresso that is poured over
+                        a single large marshmallow in
+                        a shot glass.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Coffee-Liqueur-300x184.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Coffee Liqueur</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Liqueur</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">Add any kind of liqueur (25ml)
+                        to a cup with one shot of
+                        espresso and cream of milk is
+                        added.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Dalgona-Coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Dalgona coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Sugar</li>
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This internet sensation uses frothed
+                        Dagona coffee powder and water
+                        until frothed and served onto
+                        hot or cold milk.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Egg-Coffee-300x184.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Egg coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Egg Yolks</li>
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Robusta Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is made by taking one
+                        egg yolk and mixing condensed milk
+                        until it's frothy and flavored with
+                        a spoon of hot coffee. It's
+                        then added to a mug of
+                        coffee.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Espresso-Romano-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Espresso Romano</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Lemon</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">A single or double shot of
+                        espresso with a slice of lemon
+                        or with lemon juice added.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Geisha-Coffee-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Geisha coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This is a brewing method where
+                        it's best to use a pour-over
+                        vessel to get the best results.
+                        Geisha coffee will taste better after
+                        a 14 to 20-day roast,
+                        so the grind must match the
+                        brewing method.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Guillermo-300x184.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Guillermo</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Milk</li>
+                        <li class="ingredients-item">Lime</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">A variant of the Espresso Romano
+                        except with a slice of lime
+                        and a splash of milk served
+                        over ice.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Irish-Coffee-300x258.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Irish coffee</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Whipped cream</li>
+                        <li class="ingredients-item">Whiskey</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">To make this you add one
+                        shot of espresso or coffee and
+                        one shot of whiskey topped with
+                        whipped cream.
+                    </p>
+                </div>
+            </div>
+
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Kopi-Luwak-300x179.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Kopi Luwak</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Water</li>
+                        <li class="ingredients-item">Coffee</li>
+                    </ul>
+                    <p class="ingredients-text">This highly trendy coffee is made
+                        from coffee beans that are eaten
+                        by the Civet cat and pooped
+                        out. The beans are then roasted
+                        and brewed using a variety of
+                        brewing methods.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="coffee-items-wrapper">
+            <div class="coffee-item">
+                <div class="coffee-pic">
+                    <img src="./img/coffee-drinks/exotic-coffees/Mazagran-300x184.png" alt="a-cup-of-coffee">
+                </div>
+                <div class="coffee-text">
+                    <h2 class="paragraph-title">Mazagran</h2>
+                    <ul class="ingredients-list">
+                        <li class="ingredients-item">Lemon</li>
+                        <li class="ingredients-item">Espresso</li>
+                    </ul>
+                    <p class="ingredients-text">This is a favorite for Algerians
+                        made with coffee or espresso with
+                        lemon added and sometimes milk and
+                        sugar.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="coffeeMakers" class="tabcontent"></div>
+</div>
+</main>
+  
+
+
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-categories">
+        <div class="footer-category">
+            <ul class="category-list">
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Black Coffees</a></li>
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Non-milk Based Coffees</a></li>
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Milk-Based Coffees</a></li>
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Cold Coffees</a></li>
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Exotic Coffees</a></li>
+            </ul>
+        </div>
+        <div class="footer-category">
+            <ul class="category-list">
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Types of Coffee Makers</a></li>
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Type of Coffee Beans</a></li>
+                <li class="cat-list-item"><a href="#" class="footer-link">Grinding</a></li>
+                <li class="cat-list-item"><a href="#" class="footer-link">Roasting</a></li>
+                <li class="cat-list-item"><a href="#" class="footer-link">Ratios</a></li>
+            </ul>
+        </div>
+        <div class="footer-category">
+            <ul class="category-list">
+                <li class="cat-list-item"><a href="guide.html" class="footer-link">Guide</a></li>
+                <li class="cat-list-item"><a href="brewfacts.html" class="footer-link">Brewfacts</a></li>
+                <li class="cat-list-item"><a href="locations.html" class="footer-link">Locations</a></li>
+                <li class="cat-list-item"><a href="#" class="footer-link">F.A.Q</a></li>
+                <li class="cat-list-item"><a href="#" class="footer-link">Support</a></li>
+            </ul>
+        </div>
+        <form class="footer-category">
+            <p class="sub-letter-text">Subscribe to our newsletter and be the first to know about our specials and promotions.</p>
+            <input class="sub-letter-name" type="text" name="" id="" placeholder="Your name">
+            <input class="sub-letter-email" type="email" name="" id="" placeholder="Your email address">
+            <button class="sub-letter-btn" type="submit">Subscribe</button>
+        </form>
+        </div>
+    </div>
+
+    <div class="footer-soc-links">
+        <h2 class="social-links-title">Follow Us</h2>
+        <div class="footer-social-links">
+            <a class="soc-icon-link" href="https://www.facebook.com" title="Facebook" target="_blank">
+                <svg class="soc-logo-icon">
+                    <use xlink:href="#facebook"></use>
+                </svg>
+            </a>
+            <a class="soc-icon-link" href="https://www.instagram.com" title="Instagram" target="_blank">
+                <svg class="soc-logo-icon">
+                    <use xlink:href="#instagram"></use>
+                </svg>
+            </a>
+            <a class="soc-icon-link" href="https://www.linkedin.com" title="Linkedin" target="_blank">
+                <svg class="soc-logo-icon">
+                    <use xlink:href="#linkedin"></use>
+                </svg>
+            </a>
+            <a class="soc-icon-link" href="https://www.pinterest.com" title="Pinterest" target="_blank">
+                <svg class="soc-logo-icon">
+                    <use xlink:href="#pinterest"></use>
+                </svg>
+            </a>
+            <a class="soc-icon-link" href="https://www.twitter.com" title="Twitter" target="_blank">
+                <svg class="soc-logo-icon">
+                    <use xlink:href="#twitter"></use>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-copyright">
+        <div class="footer-text-wrapper">
+            <a class="footer-terms-text" href="#">Terms and Conditions</a>
+            <a class="footer-policy-text" href="#">Privacy Policy</a>
+        </div>
+        <div  class="footer-copyright-text">Copyright &copy; Made by Olegs Krivko</div>
+    </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

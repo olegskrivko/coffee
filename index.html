@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+ 
+    <title>Coffee</title>
+</head>
+<body>
+    <!-- sprite -->
+
+   <svg style="display: none;">
+    <symbol id="coffee" viewBox="0 0 500 500">
+        <g>
+        <path class="st1" d="M360.1,282.9c-5.2-6.5-13.3-10-24.3-10.5c-1.7-0.1-3.3,0-4.9,0c0.1-2.2,0.1-4.5,0.1-6.8c0,0,0,0,0,0
+            c0-0.1,0-0.2,0-0.4h-6.7H153.6h-6.7c0,0.1,0,0.2,0,0.4c0,0,0,0,0,0c0.2,43,11.7,71.6,43.6,109.2c2.5,3-2.1,5.6-1.8,8.5h100.6
+            c0.3-2.8-4.3-5.5-1.8-8.5c2.1-2.5,4.1-4.9,6-7.3c10.4-5.1,23.3-11.3,32.4-15.3c21.7-9.6,35.6-25.3,39.1-44.1
+            C366.9,298,365.2,289.3,360.1,282.9z M351.9,305.8c-3.4,18.4-18.9,28.8-31.3,34.3c-3.3,1.5-7.1,3.2-11,5
+            c11.8-19.2,18.1-37.6,20.5-59.2c1.6-0.2,3.3-0.2,5.3-0.1c6.9,0.3,11.7,2.1,14.4,5.5C352.9,295.4,352.7,301.4,351.9,305.8z"/>
+        <path class="st1" d="M239,388.7H134.3c2.8,3.5,4,4.1,14,7c10.9,3.2,21.1,3.8,90.7,4.3c69.7-0.4,79.8-1.1,90.7-4.3
+            c9.9-2.9,11.2-3.5,14-7H239z"/>
+        <g>
+            <path class="st1" d="M272.1,100c-5.2,9.3-9.4,18.8-11.7,31.5c-2.8,16.1-0.6,28.3,2,43.4c5.5,32.5-5,60.2-22.6,68.2
+                c4.8-10.4,10.2-21.7,11.1-35.6c1-16.1-4.7-28-5.7-43.1C243.8,134,255.2,104.7,272.1,100z"/>
+            <path class="st1" d="M301,135.3c-3.4,6.1-6.2,12.3-7.6,20.6c-1.8,10.5-0.4,18.5,1.3,28.4c3.6,21.2-3.2,39.3-14.8,44.6
+                c3.1-6.8,6.6-14.2,7.2-23.3c0.7-10.5-3.1-18.3-3.7-28.2C282.5,157.5,290,138.4,301,135.3z"/>
+            <path class="st1" d="M232.8,135.3c-3.4,6.1-6.2,12.3-7.6,20.6c-1.8,10.5-0.4,18.5,1.3,28.4c3.6,21.2-3.2,39.3-14.8,44.6
+                c3.1-6.8,6.6-14.2,7.2-23.3c0.7-10.5-3.1-18.3-3.7-28.2C214.3,157.5,221.7,138.4,232.8,135.3z"/>
+        </g>
+        </g>
+    </symbol>
+    <symbol id="facebook" viewBox="0 0 96.124 96.123">
+    <g>
+    <path d="M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803
+    c0,1.083,0.878,1.96,1.96,1.96h12.533v39.876c0,1.083,0.877,1.96,1.96,1.96h16.352c1.083,0,1.96-0.878,1.96-1.96V54.287h14.654
+    c1.083,0,1.96-0.877,1.96-1.96l0.006-15.803c0-0.52-0.207-1.018-0.574-1.386c-0.367-0.368-0.867-0.575-1.387-0.575H56.842v-9.246
+    c0-4.444,1.059-6.7,6.848-6.7l8.397-0.003c1.082,0,1.959-0.878,1.959-1.96V1.98C74.046,0.899,73.17,0.022,72.089,0.02z"/>
+    </g>
+    </symbol>
+    <symbol id="instagram" viewBox="0 0 438.536 438.536">
+    <g>
+    <path d="M421.981,16.562C410.941,5.519,397.711,0,382.298,0H56.248C40.83,0,27.604,5.521,16.561,16.562
+    C5.52,27.6,0.001,40.828,0.001,56.243V382.29c0,15.413,5.518,28.644,16.56,39.683c11.043,11.04,24.272,16.563,39.687,16.563
+    h326.046c15.41,0,28.644-5.523,39.684-16.563c11.043-11.039,16.557-24.27,16.557-39.683V56.243
+    C438.534,40.825,433.021,27.604,421.981,16.562z M157.462,158.025c17.224-16.652,37.924-24.982,62.097-24.982
+    c24.36,0,45.153,8.33,62.381,24.982c17.228,16.655,25.837,36.785,25.837,60.386c0,23.598-8.609,43.729-25.837,60.379
+    c-17.228,16.659-38.014,24.988-62.381,24.988c-24.172,0-44.87-8.336-62.097-24.988c-17.228-16.652-25.841-36.781-25.841-60.379
+    C131.621,194.81,140.234,174.681,157.462,158.025z M388.865,370.589c0,4.945-1.718,9.083-5.141,12.416
+    c-3.433,3.33-7.519,4.996-12.282,4.996h-305.2c-4.948,0-9.091-1.666-12.419-4.996c-3.333-3.326-4.998-7.471-4.998-12.416V185.575
+    H89.08c-3.805,11.993-5.708,24.462-5.708,37.402c0,36.553,13.322,67.715,39.969,93.511c26.65,25.786,58.721,38.685,96.217,38.685
+    c24.744,0,47.583-5.903,68.527-17.703c20.937-11.807,37.486-27.839,49.676-48.112c12.183-20.272,18.274-42.4,18.274-66.38
+    c0-12.94-1.91-25.406-5.715-37.402h38.547v185.014H388.865z M388.865,115.626c0,5.52-1.903,10.184-5.716,13.99
+    c-3.805,3.809-8.466,5.711-13.989,5.711h-49.676c-5.517,0-10.185-1.903-13.99-5.711c-3.806-3.806-5.708-8.47-5.708-13.99V68.522
+    c0-5.33,1.902-9.945,5.708-13.848c3.806-3.901,8.474-5.854,13.99-5.854h49.676c5.523,0,10.185,1.952,13.989,5.854
+    c3.812,3.903,5.716,8.518,5.716,13.848V115.626z"/>
+    </g>
+    </symbol>
+    <symbol id="linkedin" viewBox="0 0 430.117 430.117">
+    <g>
+    <path d="M430.117,261.543V420.56h-92.188V272.193c0-37.271-13.334-62.707-46.703-62.707
+    c-25.473,0-40.632,17.142-47.301,33.724c-2.432,5.928-3.058,14.179-3.058,22.477V420.56h-92.219c0,0,1.242-251.285,0-277.32h92.21
+    v39.309c-0.187,0.294-0.43,0.611-0.606,0.896h0.606v-0.896c12.251-18.869,34.13-45.824,83.102-45.824
+    C384.633,136.724,430.117,176.361,430.117,261.543z M52.183,9.558C20.635,9.558,0,30.251,0,57.463
+    c0,26.619,20.038,47.94,50.959,47.94h0.616c32.159,0,52.159-21.317,52.159-47.94C103.128,30.251,83.734,9.558,52.183,9.558z
+     M5.477,420.56h92.184v-277.32H5.477V420.56z"/>
+    </g>
+    </symbol>
+    <symbol id="pinterest" viewBox="0 0 310.05 310.05">
+    <g>
+    <path d="M245.265,31.772C223.923,11.284,194.388,0,162.101,0c-49.32,0-79.654,20.217-96.416,37.176
+    c-20.658,20.9-32.504,48.651-32.504,76.139c0,34.513,14.436,61.003,38.611,70.858c1.623,0.665,3.256,1,4.857,1
+    c5.1,0,9.141-3.337,10.541-8.69c0.816-3.071,2.707-10.647,3.529-13.936c1.76-6.495,0.338-9.619-3.5-14.142
+    c-6.992-8.273-10.248-18.056-10.248-30.788c0-37.818,28.16-78.011,80.352-78.011c41.412,0,67.137,23.537,67.137,61.425
+    c0,23.909-5.15,46.051-14.504,62.35c-6.5,11.325-17.93,24.825-35.477,24.825c-7.588,0-14.404-3.117-18.705-8.551
+    c-4.063-5.137-5.402-11.773-3.768-18.689c1.846-7.814,4.363-15.965,6.799-23.845c4.443-14.392,8.643-27.985,8.643-38.83
+    c0-18.55-11.404-31.014-28.375-31.014c-21.568,0-38.465,21.906-38.465,49.871c0,13.715,3.645,23.973,5.295,27.912
+    c-2.717,11.512-18.865,79.953-21.928,92.859c-1.771,7.534-12.44,67.039,5.219,71.784c19.841,5.331,37.576-52.623,39.381-59.172
+    c1.463-5.326,6.582-25.465,9.719-37.845c9.578,9.226,25,15.463,40.006,15.463c28.289,0,53.73-12.73,71.637-35.843
+    c17.367-22.418,26.932-53.664,26.932-87.978C276.869,77.502,265.349,51.056,245.265,31.772z"/>
+    </g>
+    </symbol>
+    <symbol id="twitter" viewBox="0 0 512 512">
+    <g>
+    <path d="M512,97.248c-19.04,8.352-39.328,13.888-60.48,16.576c21.76-12.992,38.368-33.408,46.176-58.016
+        c-20.288,12.096-42.688,20.64-66.56,25.408C411.872,60.704,384.416,48,354.464,48c-58.112,0-104.896,47.168-104.896,104.992
+        c0,8.32,0.704,16.32,2.432,23.936c-87.264-4.256-164.48-46.08-216.352-109.792c-9.056,15.712-14.368,33.696-14.368,53.056
+        c0,36.352,18.72,68.576,46.624,87.232c-16.864-0.32-33.408-5.216-47.424-12.928c0,0.32,0,0.736,0,1.152
+        c0,51.008,36.384,93.376,84.096,103.136c-8.544,2.336-17.856,3.456-27.52,3.456c-6.72,0-13.504-0.384-19.872-1.792
+        c13.6,41.568,52.192,72.128,98.08,73.12c-35.712,27.936-81.056,44.768-130.144,44.768c-8.608,0-16.864-0.384-25.12-1.44
+        C46.496,446.88,101.6,464,161.024,464c193.152,0,298.752-160,298.752-298.688c0-4.64-0.16-9.12-0.384-13.568
+        C480.224,136.96,497.728,118.496,512,97.248z"/>
+    </g>
+    </symbol>
+</svg>
+
+
+<!-- header -->
+<nav class="nav">
+    <ul class="nav-list">
+
+        <li class="nav-item">
+            <a class="header-icon" href="index.html" title="Home">
+                <svg class="logo-icon current">
+                    <use xlink:href="#coffee"></use>
+                </svg>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="guide.html" class="nav-link">Guide</a>
+        </li>
+        <li class="nav-item">
+            <a href="brewfacts.html" class="nav-link">Brewfacts</a>
+        </li>
+        <li class="nav-item">
+            <a href="locations.html" class="nav-link">Locations</a>
+        </li>
+    </ul>
+</nav>
+
+
+    <div class="page">
+        <div class="hero-image"></div>
+    </div>
+    <p class="slogan">The best part of waking up is coffee.</p>
+    
+
+    
+
+    <div class="container">
+        <h1 class="intro-content-title">Ultimate Guide to Coffee</h1>
+        <div class="intro-content">
+            <p>Coffee has a little something for everyone, from black and bitter to light and sweet. 
+                When it comes to making, or ordering a coffee at Starbucks that’s just right for you, 
+                it helps to have a basic understanding of various types of coffee. 
+                Chances are, even the most passionate coffee lovers won’t taste every style and type of coffee in their 
+                lifetime. However, knowing what’s out there will make tasting, ordering, and preparing coffee a much 
+                better experience. 
+            </p>
+            <p>This coffee guide provides a reference for every type of coffee you may want 
+                to order or brew at home. From black coffee, milk based, cold brews, 
+                to exotic. It is designed to take you through the typical coffee shop menu, explaining the different types 
+                of coffee drink and a little about their origin.
+                The world of coffee is growing every single day, and it’s often hard to keep up with the latest 
+                inventions seen on the busy high streets. We have kept this guide simple and will explain 
+                the more traditional drinks you would expect to find in a coffee shop.
+            </p>
+            <p>After reading this guide you will:</p>
+            <ul class="introduction-ul">
+                <li>Understand what are the most popular coffee drinks.</li>
+                <li>Have an insight into how they are made.</li>
+                <li>Know the history behind them and how they came about.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="gallery">
+            <img src="./img/coffee_1.jpg" alt="">
+            <img src="./img/coffee_2.jpg" alt="">
+            <img src="./img/coffee_3.jpg" alt="">
+            <img src="./img/coffee_4.jpg" alt="">
+            <img src="./img/coffee_5.jpg" alt="">
+            <img src="./img/coffee_6.jpg" alt="">
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-categories">
+            <div class="footer-category">
+                <ul class="category-list">
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Black Coffees</a></li>
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Non-milk Based Coffees</a></li>
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Milk-Based Coffees</a></li>
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Cold Coffees</a></li>
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Exotic Coffees</a></li>
+                </ul>
+            </div>
+            <div class="footer-category">
+                <ul class="category-list">
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Types of Coffee Makers</a></li>
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Type of Coffee Beans</a></li>
+                    <li class="cat-list-item"><a href="#" class="footer-link">Grinding</a></li>
+                    <li class="cat-list-item"><a href="#" class="footer-link">Roasting</a></li>
+                    <li class="cat-list-item"><a href="#" class="footer-link">Ratios</a></li>
+                </ul>
+            </div>
+            <div class="footer-category">
+                <ul class="category-list">
+                    <li class="cat-list-item"><a href="guide.html" class="footer-link">Guide</a></li>
+                    <li class="cat-list-item"><a href="brewfacts.html" class="footer-link">Brewfacts</a></li>
+                    <li class="cat-list-item"><a href="locations.html" class="footer-link">Locations</a></li>
+                    <li class="cat-list-item"><a href="#" class="footer-link">F.A.Q</a></li>
+                    <li class="cat-list-item"><a href="#" class="footer-link">Support</a></li>
+                </ul>
+            </div>
+            <form class="footer-category">
+                <p class="sub-letter-text">Subscribe to our newsletter and be the first to know about our specials and promotions.</p>
+                <input class="sub-letter-name" type="text" name="" id="" placeholder="Your name">
+                <input class="sub-letter-email" type="email" name="" id="" placeholder="Your email address">
+                <button class="sub-letter-btn" type="submit">Subscribe</button>
+            </form>
+            </div>
+        </div>
+    
+        <div class="footer-soc-links">
+            <h2 class="social-links-title">Follow Us</h2>
+            <div class="footer-social-links">
+                <a class="soc-icon-link" href="https://www.facebook.com" title="Facebook" target="_blank">
+                    <svg class="soc-logo-icon">
+                        <use xlink:href="#facebook"></use>
+                    </svg>
+                </a>
+                <a class="soc-icon-link" href="https://www.instagram.com" title="Instagram" target="_blank">
+                    <svg class="soc-logo-icon">
+                        <use xlink:href="#instagram"></use>
+                    </svg>
+                </a>
+                <a class="soc-icon-link" href="https://www.linkedin.com" title="Linkedin" target="_blank">
+                    <svg class="soc-logo-icon">
+                        <use xlink:href="#linkedin"></use>
+                    </svg>
+                </a>
+                <a class="soc-icon-link" href="https://www.pinterest.com" title="Pinterest" target="_blank">
+                    <svg class="soc-logo-icon">
+                        <use xlink:href="#pinterest"></use>
+                    </svg>
+                </a>
+                <a class="soc-icon-link" href="https://www.twitter.com" title="Twitter" target="_blank">
+                    <svg class="soc-logo-icon">
+                        <use xlink:href="#twitter"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    
+        <div class="footer-copyright">
+            <div class="footer-text-wrapper">
+                <a class="footer-terms-text" href="#">Terms and Conditions</a>
+                <a class="footer-policy-text" href="#">Privacy Policy</a>
+            </div>
+            <div  class="footer-copyright-text">Copyright &copy; Made by Olegs Krivko</div>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
